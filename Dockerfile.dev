@@ -2,9 +2,27 @@ FROM ros@sha256:b7312519d1f0ca9e486a6f6f876a9de30c017b0f21d52811142e0ab1c33cba5e
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Python
 RUN apt update && apt install -y \
     python3.8 python3.8-venv python3.8-dev python3-pip \
     && rm -rf /var/lib/apt/lists/*
+
+# Utils
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    vim \
+    bash \
+    htop \
+    iputils-ping \
+    net-tools \
+    sudo \
+    less \
+    nano \
+    man \
+    build-essential \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash auria && \
     echo 'rosuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
