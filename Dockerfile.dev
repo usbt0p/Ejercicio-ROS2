@@ -13,6 +13,24 @@ RUN apt update && apt install -y \
     libgl1 \
  && pip install --no-cache-dir opencv-python
 
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libxkbcommon-x11-0 \
+    libxcb-xinerama0 \
+    libxcb1 \
+    libx11-xcb1 \
+    libxcb-render0 \
+    libxcb-shape0 \
+    libxcb-shm0 \
+    qt5-default \
+    && rm -rf /var/lib/apt/lists/*
+
 # Utils
 RUN apt-get update && apt-get install -y \
     curl \
@@ -37,5 +55,7 @@ USER auria
 WORKDIR /home/auria
 
 RUN echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc
+
+ENV QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
 
 CMD ["/bin/bash"]

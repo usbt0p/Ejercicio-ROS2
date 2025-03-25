@@ -25,8 +25,7 @@ else
     echo "Iniciando un nuevo contenedor..."
     docker run --rm -it --name "${CONTAINER_NAME}" \
         --net=host \
-        -v "$(pwd)":/auria \
-        -w /auria \
+        -v "$(pwd)":/home/auria \
         --env DISPLAY="${DISPLAY}" \
         "${IMAGE_NAME}" /bin/bash
 fi
