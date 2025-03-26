@@ -180,6 +180,7 @@ cython_debug/
 install/
 log/
 build/
+.config/
 
 # vim
 .vim/
