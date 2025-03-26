@@ -20,6 +20,7 @@ setup(
     entry_points={
         'console_scripts': [
             'env = environment.environment:main',
+            'car = environment.car:main'
         ],
     },
 )
