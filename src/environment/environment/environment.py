@@ -26,6 +26,7 @@ class Environment(Node):
         self.timer = self.create_timer(0.1, self.update_image)
 
         self.speed_pub = self.create_publisher(Float32, '/can/speed', 10)
+        self.yaw_pub = self.create_publisher(Float32, '/can/yaw', 10)
 
         self.pub_all_blue = self.create_publisher(PointArray, '/vision/all_cones/blue', 10)
         self.pub_all_yellow = self.create_publisher(PointArray, '/vision/all_cones/yellow', 10)
@@ -111,6 +112,11 @@ class Environment(Node):
         speed = Float32()
         speed.data = math.hypot(self.car_position.x, self.car_position.y)
         self.speed_pub.publish(speed)
+
+        # Yaw
+        yaw = Float32()
+        yaw.data = self.car_yaw
+        self.yaw_pub.publish(yaw)
 
         # All cones
         msg_all_blue = PointArray()
