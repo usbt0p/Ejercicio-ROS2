@@ -140,7 +140,8 @@ def main(args=None):
     rclpy.init(args=args)
     node = Environment()
     try:
-        rclpy.spin(node)
+        rclpy.spin(node)    
+
     except KeyboardInterrupt:
         pass
     finally:
