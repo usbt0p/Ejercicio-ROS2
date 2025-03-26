@@ -2,21 +2,19 @@ FROM ros@sha256:b7312519d1f0ca9e486a6f6f876a9de30c017b0f21d52811142e0ab1c33cba5e
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Python
+# Install Python 3.8 and ROS tools
 RUN apt update && apt install -y \
-    python3.8 python3.8-venv python3.8-dev python3-pip \
+    python3.8 python3.8-venv python3.8-dev \
+    python3-pip \
     python3-colcon-common-extensions \
+    && ln -sf python3.8 /usr/bin/python3 \
+    && ln -sf python3.8 /usr/bin/python \
+    && pip3 install --upgrade pip \
     && rm -rf /var/lib/apt/lists/*
 
+# Install OpenCV and Qt dependencies
 RUN apt update && apt install -y \
-    python3-pip \
     libgl1 \
- && pip install --no-cache-dir opencv-python
-
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
@@ -31,31 +29,27 @@ RUN apt-get update && apt-get install -y \
     qt5-default \
     && rm -rf /var/lib/apt/lists/*
 
-# Utils
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    vim \
-    bash \
-    htop \
-    iputils-ping \
-    net-tools \
-    sudo \
-    less \
-    nano \
-    man \
-    build-essential \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+# Install OpenCV for Python
+RUN pip install --no-cache-dir opencv-python
 
+# Useful tools
+RUN apt update && apt install -y \
+    curl git vim bash htop iputils-ping net-tools \
+    sudo less nano man build-essential tmux \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
 RUN useradd -ms /bin/bash auria && \
-    echo 'rosuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+    echo 'auria ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER auria
 WORKDIR /home/auria
 
+# Source ROS setup on shell startup
 RUN echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc
 
+# Set Qt plugin path to avoid GUI errors
 ENV QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
 
 CMD ["/bin/bash"]

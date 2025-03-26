@@ -7,6 +7,8 @@ HASH_FILE=".dockerfile.hash"
 CURRENT_HASH=$(sha256sum "$DOCKERFILE" | cut -d ' ' -f1)
 PREVIOUS_HASH=$(cat "$HASH_FILE" 2>/dev/null)
 
+xhost +local:root > /dev/null
+
 if [[ "$CURRENT_HASH" != "$PREVIOUS_HASH" ]] || [[ -z $(docker images -q "$IMAGE_NAME") ]]; then
     read -p "Dockerfile modificado o la imagen no existe. ¿Quieres construirlo? [Y/n] " response
     if [[ -z "$response" || "$response" =~ ^[Yy]$ ]]; then
