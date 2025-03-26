@@ -107,12 +107,6 @@ To launch the environment with full GUI (rqt_graph, OpenCV, etc.), simply run th
 ./x
 ```
 
-> ✅ This script takes care of:
-> - Granting X11 permissions (`xhost +local:docker`)
-> - Mounting the working directory
-> - Exposing the display
-> - Ensuring OpenCV and Qt apps work inside the container
-
 ---
 
 ## 📎 Developer Notes
@@ -122,4 +116,35 @@ To launch the environment with full GUI (rqt_graph, OpenCV, etc.), simply run th
 
 ---
 
+## 🚀 Launch Instructions
+
+### ▶️ Launch nodes individually
+
+Make sure you have compiled and sourced your workspace:
+
+```bash
+colcon build --symlink-install
+source install/setup.bash
+```
+
+Then run each node like this:
+
+```bash
+ros2 run environment env     # Launches the environment (map, cones, car view)
+ros2 run environment car     # Launches the car node (publishes position)
+```
+
+### 🧩 Launch everything with one command
+
+A launch file is provided for convenience. To run both the environment and car nodes together:
+
+```bash
+ros2 launch environment launch_env.py
+```
+
+> This will start both nodes in the same terminal, printing their logs to the screen.
+
+---
+
 Happy coding & enjoy the challenge! 🚗🧠✨
+
