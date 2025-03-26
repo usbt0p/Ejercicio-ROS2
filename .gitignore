@@ -181,3 +181,9 @@ install/
 log/
 build/
 
+# vim
+.vim/
+.viminfo
+
+# bash
+.bash_history
