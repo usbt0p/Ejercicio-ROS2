@@ -16,7 +16,7 @@ class Environment(Node):
     def __init__(self):
         super().__init__('environment')
 
-        self.cones = self.read_cones('conos.csv')
+        self.cones = self.read_cones('small_track.csv')
         self.car_position = None
         self.car_yaw = 0.0
 
@@ -37,8 +37,7 @@ class Environment(Node):
 
     def read_cones(self, file_name):
         pkg_dir = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.join(pkg_dir, file_name)
-
+        file_path = os.path.abspath(os.path.join(pkg_dir, '..', 'tracks', file_name))
         cones = []
         with open(file_path, newline='') as csvfile:
             reader = csv.reader(csvfile)
