@@ -5,6 +5,7 @@ from geometry_msgs.msg import Point
 from std_msgs.msg import Float32
 from std_msgs.msg import Header
 from builtin_interfaces.msg import Time
+from ament_index_python.packages import get_package_share_directory
 import csv
 import cv2
 import numpy as np
@@ -36,8 +37,10 @@ class Environment(Node):
         self.get_logger().info("Environment node running successfully")
 
     def read_cones(self, file_name):
-        pkg_dir = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.abspath(os.path.join(pkg_dir, '..', 'tracks', file_name))
+        pkg_share_dir = get_package_share_directory('environment')
+        file_path = os.path.join(pkg_share_dir, 'tracks', file_name)
+
+        self.get_logger().info(f'target path: {file_path}')
         cones = []
         with open(file_path, newline='') as csvfile:
             reader = csv.reader(csvfile)
