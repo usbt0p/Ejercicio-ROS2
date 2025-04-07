@@ -28,9 +28,15 @@ The goal is to **develop a new node or set of nodes** (either in this package or
 | `/car/acceleration` | `std_msgs/Float32`  | Linear acceleration in m/s². Positive = forward, negative = braking. |
 | `/car/state`        | `std_msgs/String`   | Can only be set to `"finish"`. Indicates completion of track. |
 
-#### ⚠️ **No access is allowed to topics starting with `/env`**.
 
-These topics are **internal** and intended only for the environment's own use (e.g., rendering, data aggregation).
+#### ⚠️ **Limited access to `/env` topics**
+
+Topics starting with `/env` are **internal** and intended only for the environment's own use. 
+
+However, you **can read from** the topic:
+
+- `/env/car_position`: shows the current position of the car (`geometry_msgs/Point`).
+
 
 ---
 
