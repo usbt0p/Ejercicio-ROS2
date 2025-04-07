@@ -13,8 +13,23 @@ class Prueba(Node):
 
         # tipo de mensaje, 
         self.acc_pub = self.create_publisher(Float32, '/car/acceleration', self.HZ)
+        self.steering_pub = self.create_publisher(Float32, '/car/steering', self.HZ)
+        self.state_pub = self.create_publisher(String, '/car/state', self.HZ)
+
+        self.create_subscriber(Float32, '/vision/cones', self.save_cones, 10) # la funcion que se llama cuando llega un mensaje
+        # solo guardarlo como atributo y luego hacer logica en otra funcion
+
+        # TODO auria_msgs/msg/PointArray es un mensaje con estructura propia
+
+        
 
         self.timer = self.create_timer(1.0 / self.HZ, self.send_acceleration)
+
+    def save_cones(self, msg):
+        msg = Point()
+        msg.x = 0.0
+        msg.y = 0.0
+        adsfasfdsda
 
     # now send acdeleration to /car/acceleration
     def send_acceleration(self):

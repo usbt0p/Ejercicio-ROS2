@@ -1,2 +1,7 @@
 ros2 pkg create prueba --build-type ament_python --dependencies rclpy std_msgs
 colcon build
+
+environment pasa x, y, v , conos, conos cerca a prueba
+prueba tiene que sacar el steering y aceleración 
+    estos son acumulativos! si envias datos de aceleracion positiva tienes que enviar los mismos negativos si quieres frenar
+    
