@@ -17,6 +17,8 @@ class Environment(Node):
     def __init__(self):
         super().__init__('environment')
 
+        self.last_position = None
+
         self.cones = self.read_cones('small_track.csv')
         self.car_position = None
         self.car_yaw = 0.0
@@ -111,8 +113,21 @@ class Environment(Node):
         cv2.waitKey(1)
 
         # Speed
+        if self.last_position is not None:
+            dx = self.car_position.x - self.last_position.x
+            dy = self.car_position.y - self.last_position.y
+            speed_value = math.hypot(dx, dy) / 0.1
+        else:
+            speed_value = 0.0
+
+        self.last_position = Point(
+            x=self.car_position.x,
+            y=self.car_position.y,
+            z=self.car_position.z
+        )
+
         speed = Float32()
-        speed.data = math.hypot(self.car_position.x, self.car_position.y)
+        speed.data = speed_value
         self.speed_pub.publish(speed)
 
         # Yaw
